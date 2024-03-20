@@ -50,7 +50,7 @@ func main() {
 	}
 
 	custom_middleware.InitMiddleware(ech, echoGroup, customlog)
-	//setDependencyInjection()
+	setDependencyInjection()
 
 	ech.GET("/ping", ping)
 	var err error
