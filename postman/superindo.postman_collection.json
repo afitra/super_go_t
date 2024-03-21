@@ -1,0 +1,177 @@
+{
+	"info": {
+		"_postman_id": "3328f1f4-afc6-48d4-9e94-1df315793d75",
+		"name": "superindo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26430410"
+	},
+	"item": [
+		{
+			"name": "/api/product/register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"produk21\",\n    \"product_type\": \"snack\",\n    \"description\": \"description satu\",\n    \"price\": 10000\n    //   'protein',\n    //    sayuran',\n    //   'buah',\n    //   'snack'\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/product/register",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"product",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/product/list?offset=0&limit=5",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/product/list?offset=0&limit=5",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"product",
+						"list"
+					],
+					"query": [
+						{
+							"key": "offset",
+							"value": "0"
+						},
+						{
+							"key": "limit",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/product/search?data=PR-QXAEV801",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/product/search?data=PR-QXAEV801",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"product",
+						"search"
+					],
+					"query": [
+						{
+							"key": "data",
+							"value": "produk12",
+							"description": "search by name or product_code",
+							"disabled": true
+						},
+						{
+							"key": "data",
+							"value": "PR-QXAEV801"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/product/filter-product_type_with_cache/:product_type?offset=0&limit=20",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/product/filter-product_type_with_cache/:product_type?offset=0&limit=20",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"product",
+						"filter-product_type_with_cache",
+						":product_type"
+					],
+					"query": [
+						{
+							"key": "offset",
+							"value": "0"
+						},
+						{
+							"key": "limit",
+							"value": "20"
+						}
+					],
+					"variable": [
+						{
+							"key": "product_type",
+							"value": "protein",
+							"description": "protein / snack / sayuran / buah"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/product/sort/:key?offset=0&limit=10",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/product/sort/:key?offset=0&limit=10",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"product",
+						"sort",
+						":key"
+					],
+					"query": [
+						{
+							"key": "offset",
+							"value": "0"
+						},
+						{
+							"key": "limit",
+							"value": "10"
+						}
+					],
+					"variable": [
+						{
+							"key": "key",
+							"value": "register_date",
+							"description": "register_date / price /  name"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
