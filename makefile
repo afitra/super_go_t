@@ -11,3 +11,9 @@ migrate_up:
 
 migrate_down:
 	migrate -path db/migration -database "postgresql://root:root@localhost:5433/superindo?sslmode=disable" -verbose down
+
+build_up :
+	docker-compose up -d
+
+build_down :
+	docker-compose down
