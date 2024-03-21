@@ -6,7 +6,6 @@ import (
 	"errors"
 	"fmt"
 	"github.com/labstack/echo/v4"
-	"github.com/redis/go-redis/v9"
 	"strconv"
 	"superindo/v1/connection"
 	"superindo/v1/domain/product"
@@ -20,11 +19,10 @@ type Product_usecase struct {
 	source             string
 	product_repository product.Repository
 	redis_cache        connection.Redis_cache
-	redis_client       *redis.Client
 }
 
-func NewProduct_usecase(product_repository product.Repository, redis connection.Redis_cache, redis_con *redis.Client) product.Usecase {
-	return &Product_usecase{"Product_usecase", product_repository, redis, redis_con}
+func NewProduct_usecase(product_repository product.Repository, redis connection.Redis_cache) product.Usecase {
+	return &Product_usecase{"Product_usecase", product_repository, redis}
 }
 
 func (IN *Product_usecase) Use_post_product_register(c echo.Context, request model.Req_register_product) (interface{}, error) {
@@ -139,11 +137,13 @@ func (IN *Product_usecase) Use_get_product_filter(c echo.Context) (interface{}, 
 		return resp, err
 	}
 
+	// will return  cache data
 	if len(products) > 0 {
 		resp = response.Set_success_response(response.Code_success_general, true, response.Message_success_general, products)
 		return resp, err
 	}
 
+	// will return dengan data dari query tanpa cache
 	if data, err = IN.product_repository.Rep_get_product_filter_by_product_code(c.Param("product_type"), offset, limit); err != nil {
 		resp := response.Set_error_response(err, response.Code_error_general, false, response.Message_success_data_not_found)
 		return resp, err

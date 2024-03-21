@@ -20,7 +20,7 @@ func NewProduct_delievery(echoGroup model.EchoGroup, emus product.Usecase) {
 	echoGroup.API.POST("/product/register", handler.Del_post_product_register)
 	echoGroup.API.GET("/product/list", handler.Del_get_product_list)
 	echoGroup.API.GET("/product/search", handler.Del_get_product_search)
-	echoGroup.API.GET("/product/filter-product_type/:product_type", handler.Del_get_product_filter)
+	echoGroup.API.GET("/product/filter-product_type_with_cache/:product_type", handler.Del_get_product_filter)
 	echoGroup.API.GET("/product/sort/:key", handler.Del_get_product_sort)
 
 }

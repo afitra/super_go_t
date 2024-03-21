@@ -73,7 +73,7 @@ func setDependencyInjection() {
 	employee_repository := _product_repository.NewProduct_repository(basic_sqlx_connection)
 
 	// Usecase
-	employee_usecase := _product_usecase.NewProduct_usecase(employee_repository, redis_con, redis_client)
+	employee_usecase := _product_usecase.NewProduct_usecase(employee_repository, redis_con)
 
 	// Handler
 	_product_delievery.NewProduct_delievery(echo_group, employee_usecase)
