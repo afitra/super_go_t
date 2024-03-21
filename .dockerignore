@@ -1,0 +1,17 @@
+# Ignore Go binary files
+*.exe
+*.exe~
+*.dll
+*.so
+
+/vendor/
+
+# Ignore any file or directory starting with a dot
+.*
+
+# Ignore .env files (to prevent accidentally adding them to the Docker image)
+.env
+
+# Ignore any temporary files
+*.tmp
+/logs
