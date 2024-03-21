@@ -18,7 +18,7 @@ type Repository interface {
 }
 
 type Usecase interface {
-	Use_product_register(c echo.Context, request model.Req_register_product) (interface{}, error)
+	Use_post_product_register(c echo.Context, request model.Req_register_product) (interface{}, error)
 	Use_get_product_list(c echo.Context) (interface{}, error)
 	Use_get_product_search(c echo.Context) (interface{}, error)
 	Use_get_product_filter(c echo.Context) (interface{}, error)

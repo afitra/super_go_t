@@ -37,7 +37,7 @@ func (emus *Product_delievery) Del_post_product_register(c echo.Context) error {
 		return response.Reverse_error_response(c, err)
 	}
 
-	resp, _ = emus.Product_usecase.Use_product_register(c, request)
+	resp, _ = emus.Product_usecase.Use_post_product_register(c, request)
 	return c.JSON(http.StatusOK, resp)
 }
 

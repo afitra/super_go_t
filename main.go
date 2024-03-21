@@ -1,15 +1,18 @@
 package main
 
 import (
+	"context"
 	"database/sql"
 	"fmt"
 	"github.com/jmoiron/sqlx"
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	_ "github.com/lib/pq"
+	"github.com/redis/go-redis/v9"
 	"github.com/sirupsen/logrus"
 	"net/http"
 	"os"
+	_redis_connection "superindo/v1/connection"
 	"superindo/v1/custom_middleware"
 	_product_delievery "superindo/v1/domain/product/delievery"
 	_product_repository "superindo/v1/domain/product/repository"
@@ -23,8 +26,9 @@ var (
 	ech                   *echo.Echo
 	basic_sql_connection  *sql.DB
 	basic_sqlx_connection *sqlx.DB
-	customlog             *logrus.Logger
-	echoGroup             model.EchoGroup
+	custom_log            *logrus.Logger
+	echo_group            model.EchoGroup
+	redis_client          *redis.Client
 )
 
 func init() {
@@ -34,22 +38,23 @@ func init() {
 	ech.Debug = true
 	loadEnv()
 
-	customlog = logrus.New()
-	logger.Init_Logger(customlog)
+	custom_log = logrus.New()
+	logger.Init_Logger(custom_log)
 
 	getDBConn()
+	init_redis()
 
 }
 
 func main() {
 
-	echoGroup = model.EchoGroup{
+	echo_group = model.EchoGroup{
 		API:     ech.Group("/api"),
 		Private: ech.Group("/private"),
 		Public:  ech.Group("/public"),
 	}
 
-	custom_middleware.InitMiddleware(ech, echoGroup, customlog)
+	custom_middleware.InitMiddleware(ech, echo_group, custom_log)
 	setDependencyInjection()
 
 	ech.GET("/ping", ping)
@@ -60,15 +65,18 @@ func main() {
 }
 
 func setDependencyInjection() {
+
+	redis_con := _redis_connection.NewRedis_Connection(redis_client)
+
 	// Repository
 
 	employee_repository := _product_repository.NewProduct_repository(basic_sqlx_connection)
 
 	// Usecase
-	employee_usecase := _product_usecase.NewProduct_usecase(employee_repository)
+	employee_usecase := _product_usecase.NewProduct_usecase(employee_repository, redis_con, redis_client)
 
 	// Handler
-	_product_delievery.NewProduct_delievery(echoGroup, employee_usecase)
+	_product_delievery.NewProduct_delievery(echo_group, employee_usecase)
 
 }
 
@@ -138,4 +146,31 @@ func getDBConn() {
 	basic_sqlx_connection = sqlxConn
 
 	defer basic_sql_connection.Close()
+}
+
+func init_redis() {
+	redisHost := os.Getenv("REDIS_HOST")
+	if redisHost == "" {
+		redisHost = "localhost"
+	}
+
+	redisPort := os.Getenv("REDIS_PORT")
+	if redisPort == "" {
+		redisPort = "6379"
+	}
+
+	redis_client = redis.NewClient(&redis.Options{
+		Addr:     fmt.Sprintf("%s:%s", redisHost, redisPort),
+		Password: os.Getenv("REDIS_PASSWORD"),
+		DB:       0,
+	})
+
+	ctx := context.Background()
+
+	_, err := redis_client.Ping(ctx).Result()
+	if err != nil {
+		// Handle error
+		panic(err)
+	}
+
 }
