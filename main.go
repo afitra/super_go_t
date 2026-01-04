@@ -4,12 +4,6 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"github.com/jmoiron/sqlx"
-	"github.com/joho/godotenv"
-	"github.com/labstack/echo/v4"
-	_ "github.com/lib/pq"
-	"github.com/redis/go-redis/v9"
-	"github.com/sirupsen/logrus"
 	"net/http"
 	"os"
 	_redis_connection "superindo/v1/connection"
@@ -20,6 +14,13 @@ import (
 	"superindo/v1/logger"
 	"superindo/v1/model"
 	"time"
+
+	"github.com/jmoiron/sqlx"
+	"github.com/joho/godotenv"
+	"github.com/labstack/echo/v4"
+	_ "github.com/lib/pq"
+	"github.com/redis/go-redis/v9"
+	"github.com/sirupsen/logrus"
 )
 
 var (
