@@ -42,6 +42,7 @@ func init() {
 	custom_log = logrus.New()
 	logger.Init_Logger(custom_log)
 
+	// Login
 	getDBConn()
 	// init_redis()
 
