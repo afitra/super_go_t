@@ -42,8 +42,9 @@ func init() {
 	custom_log = logrus.New()
 	logger.Init_Logger(custom_log)
 
-	getDBConn()
+	// getDBConn()
 	// init_redis()
+	fmt.Println("belajar")
 
 }
 
