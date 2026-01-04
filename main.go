@@ -42,7 +42,7 @@ func init() {
 	logger.Init_Logger(custom_log)
 
 	getDBConn()
-	init_redis()
+	// init_redis()
 
 }
 
