@@ -43,6 +43,7 @@ func init() {
 
 	// getDBConn()
 	// init_redis()
+	fmt.Println("belajar")
 
 }
 
